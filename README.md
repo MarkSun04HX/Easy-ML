@@ -5,6 +5,8 @@ Easy-ML is a user-friendly machine learning library that provides easy-to-use im
 
 Use `index.html` as the main entry page to access all available model tools from one place.
 
+Open that file from the **project root** (the folder that contains both `index.html` and the `models/` directory). Each model card links to `models/<ModelName>.html`. If you open `models/index.html` instead, your browser will redirect to the root hub, or you can use the direct links on that page.
+
 ## Supported Models
 1. **XGBoost**  
    XGBoost is an optimized gradient boosting approach designed for high performance on tabular data.
