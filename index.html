@@ -141,7 +141,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            pointer-events: none;
         }
 
         .model-card:hover .model-btn {
@@ -187,7 +186,7 @@
 
         <div class="models-grid">
             <!-- XGBoost Card -->
-            <a class="model-card" href="models/XGBoost.html">
+            <a class="model-card" href="./models/XGBoost.html">
                 <div class="model-icon">🚀</div>
                 <h2>XGBoost</h2>
                 <p class="model-description">
@@ -219,7 +218,7 @@
             </a>
 
             <!-- Random Forest Card -->
-            <a class="model-card" href="models/RandomForest.html">
+            <a class="model-card" href="./models/RandomForest.html">
                 <div class="model-icon">🌲</div>
                 <h2>Random Forest</h2>
                 <p class="model-description">
@@ -251,7 +250,7 @@
             </a>
 
             <!-- Linear Regression Card -->
-            <a class="model-card" href="models/LinearRegression.html">
+            <a class="model-card" href="./models/LinearRegression.html">
                 <div class="model-icon">📉</div>
                 <h2>Linear Regression</h2>
                 <p class="model-description">
@@ -282,7 +281,7 @@
                 <span class="model-btn">Try Linear Regression →</span>
             </a>
             <!-- Elastic Net Card -->
-            <a class="model-card" href="models/ElasticNet.html">
+            <a class="model-card" href="./models/ElasticNet.html">
                 <div class="model-icon">🔗</div>
                 <h2>Elastic Net</h2>
                 <p class="model-description">
@@ -299,7 +298,7 @@
             </a>
 
             <!-- Decision Tree Card -->
-            <a class="model-card" href="models/DecisionTree.html">
+            <a class="model-card" href="./models/DecisionTree.html">
                 <div class="model-icon">🌳</div>
                 <h2>Decision Tree</h2>
                 <p class="model-description">
@@ -316,7 +315,7 @@
             </a>
 
             <!-- Neural Networks Card -->
-            <a class="model-card" href="models/NeuralNetworks.html">
+            <a class="model-card" href="./models/NeuralNetworks.html">
                 <div class="model-icon">🧠</div>
                 <h2>Neural Networks</h2>
                 <p class="model-description">
@@ -333,7 +332,7 @@
             </a>
 
             <!-- CatBoost Card -->
-            <a class="model-card" href="models/CatBoost.html">
+            <a class="model-card" href="./models/CatBoost.html">
                 <div class="model-icon">🐱</div>
                 <h2>CatBoost</h2>
                 <p class="model-description">
@@ -350,7 +349,7 @@
             </a>
 
             <!-- SVMs Card -->
-            <a class="model-card" href="models/SVMs.html">
+            <a class="model-card" href="./models/SVMs.html">
                 <div class="model-icon">🧭</div>
                 <h2>SVMs</h2>
                 <p class="model-description">
@@ -367,7 +366,7 @@
             </a>
 
             <!-- KNNs Card -->
-            <a class="model-card" href="models/KNNs.html">
+            <a class="model-card" href="./models/KNNs.html">
                 <div class="model-icon">📍</div>
                 <h2>KNNs</h2>
                 <p class="model-description">
@@ -384,7 +383,7 @@
             </a>
 
             <!-- LightGBM Card -->
-            <a class="model-card" href="models/LightGBM.html">
+            <a class="model-card" href="./models/LightGBM.html">
                 <div class="model-icon">💡</div>
                 <h2>LightGBM</h2>
                 <p class="model-description">
@@ -401,7 +400,7 @@
             </a>
 
             <!-- Logistic Regression Card -->
-            <a class="model-card" href="models/LogisticRegression.html">
+            <a class="model-card" href="./models/LogisticRegression.html">
                 <div class="model-icon">📐</div>
                 <h2>Logistic Regression</h2>
                 <p class="model-description">
@@ -418,7 +417,7 @@
             </a>
 
             <!-- Naive Bayes Card -->
-            <a class="model-card" href="models/NaiveBayes.html">
+            <a class="model-card" href="./models/NaiveBayes.html">
                 <div class="model-icon">🧪</div>
                 <h2>Naive Bayes</h2>
                 <p class="model-description">
@@ -439,5 +438,16 @@
             <p>🎓 Easy-ML | Making Machine Learning Accessible to Everyone</p>
         </div>
     </div>
+    <script>
+        (function () {
+            document.querySelectorAll('a.model-card[href]').forEach(function (a) {
+                var href = a.getAttribute('href');
+                if (!href || /^(https?:|mailto:|#)/i.test(href)) return;
+                try {
+                    a.setAttribute('href', new URL(href, window.location.href).href);
+                } catch (e) { /* leave as-is */ }
+            });
+        })();
+    </script>
 </body>
 </html>

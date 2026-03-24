@@ -3,9 +3,15 @@
 ## Overview
 Easy-ML is a user-friendly machine learning library that provides easy-to-use implementations of popular algorithms. This documentation covers setup, file structure, CSV format requirements, per-model feature requirements, and evaluation metrics.
 
-Use `index.html` as the main entry page to access all available model tools from one place.
+Use **`index.html` in the project root** as the only hub page to open every model tool. There is no second `index.html` under `models/`—model pages are named like `models/XGBoost.html`.
 
-Open that file from the **project root** (the folder that contains both `index.html` and the `models/` directory). Each model card links to `models/<ModelName>.html`. If you open `models/index.html` instead, your browser will redirect to the root hub, or you can use the direct links on that page.
+Open the hub from the **project root** (the folder that contains both `index.html` and the `models/` directory). Each card links to `./models/<ModelName>.html`.
+
+If card clicks do nothing in an embedded or `file://` preview, run a tiny local server from the project root and open `http://localhost:8000/index.html`:
+
+```bash
+cd /path/to/Easy-ML && python3 -m http.server 8000
+```
 
 ## Supported Models
 1. **XGBoost**  
