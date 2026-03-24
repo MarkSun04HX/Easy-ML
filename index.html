@@ -76,6 +76,7 @@
             color: #667eea;
             font-size: 1.8em;
             margin-bottom: 15px;
+            min-height: 2.2em;
         }
 
         .model-description {
@@ -83,7 +84,7 @@
             margin-bottom: 20px;
             line-height: 1.6;
             font-size: 0.95em;
-            flex-grow: 1;
+            min-height: 4.8em;
         }
 
         .model-details {
@@ -91,6 +92,7 @@
             padding: 15px;
             border-radius: 10px;
             margin-bottom: 20px;
+            min-height: 238px;
         }
 
         .detail-item {
@@ -109,6 +111,8 @@
             color: #666;
             padding-left: 10px;
             border-left: 3px solid #667eea;
+            display: block;
+            min-height: 1.2em;
         }
 
         .model-btn {
@@ -178,7 +182,7 @@
                 <div class="model-icon">🚀</div>
                 <h2>XGBoost</h2>
                 <p class="model-description">
-                    eXtreme Gradient Boosting is a powerful ensemble learning method that combines multiple decision trees sequentially, with each tree correcting errors from previous ones.
+                    Fast gradient boosting for tabular data, with strong performance on many regression and classification tasks.
                 </p>
                 <div class="model-details">
                     <div class="detail-item">
@@ -212,7 +216,7 @@
                 <div class="model-icon">🌲</div>
                 <h2>Random Forest</h2>
                 <p class="model-description">
-                    An ensemble method that builds multiple decision trees in parallel using random subsets of data and features, then averages their predictions for robust results.
+                    Ensemble of decision trees trained on random samples to produce stable and robust predictions.
                 </p>
                 <div class="model-details">
                     <div class="detail-item">
@@ -273,6 +277,7 @@
                 <button class="model-btn" onclick="window.location.href='models/LinearRegression.html'">
                     Try Linear Regression →
                 </button>
+            </div>
             <!-- Elastic Net Card -->
             <div class="model-card">
                 <div class="model-icon">🔗</div>
