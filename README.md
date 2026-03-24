@@ -1,118 +1,63 @@
-# Prediction Machine 🤖
+# Easy-ML Documentation
 
-A sophisticated web-based prediction system that leverages machine learning models to make accurate predictions on user-provided data.
+## Overview
+Easy-ML is a user-friendly machine learning library that provides easy-to-use implementations of popular algorithms. This documentation covers the setup instructions, file structure, CSV format requirements, model explanations, metrics, and future enhancements.
 
-## Features ✨
+## Supported Models
+1. **XGBoost**  
+   XGBoost is an optimized distributed gradient boosting library designed to be highly efficient, flexible, and portable.
+   - **Features**: Handles missing data, supports multiple languages, and built-in cross-validation.
 
-- **Multiple ML Models**: Support for industry-leading prediction algorithms
-  - 🌲 **Random Forest**: Ensemble learning with 100 decision trees
-    - RMSE: 0.4523
-    - Accuracy: 95.2%
-  - ⚡ **XGBoost**: Gradient boosting for optimal performance
-    - RMSE: 0.3821
-    - Accuracy: 96.8%
+2. **Random Forest**  
+   Random Forest is an ensemble learning method that constructs multiple decision trees during training and merges them to improve accuracy.
+   - **Features**: Reduces overfitting, handles large datasets, and provides feature importance.
 
-- **Beautiful, Responsive UI**: Modern gradient-based interface that works on all devices
-- **Real-time Predictions**: Instant results with confidence intervals
-- **Performance Metrics**: View model RMSE and accuracy scores
-- **Input Validation**: Robust error checking and user guidance
-- **Confidence Range**: Display prediction uncertainty based on model RMSE
+3. **Linear Regression**  
+   A simple algorithm that models the relationship between a dependent variable and one or more independent variables.
+   - **Features**: Easy to implement, interpretable results, and gives overall trend.
 
-## How to Use 📖
+4. **Elastic Net**  
+   Combines L1 (Lasso) and L2 (Ridge) regularization techniques to enhance model performance in the presence of correlated features.
+   - **Features**: Tackle multicollinearity, sparse solutions, and flexibility in penalty formulation.
 
-1. **Open the Webpage**: Open `index.html` in your web browser
-2. **Select a Model**: Choose between Random Forest or XGBoost
-3. **Input Features**: Provide the following data:
-   - Feature 1 (Age): Numeric value 0-100
-   - Feature 2 (Income): Numeric value (e.g., 50000)
-   - Feature 3 (Score): Numeric value 0-100
-   - Feature 4 (Hours): Numeric value 0-24
-4. **Make Prediction**: Click the "Make Prediction" button
-5. **View Results**: See the prediction value and confidence range
+5. **Decision Tree**  
+   A non-parametric supervised learning method used for classification and regression.
+   - **Features**: Easy to interpret, handles categorical data efficiently, and requires little data preprocessing.
 
-## Model Information 📊
+## Setup Instructions
+1. Clone the repository:
+   ```
+   git clone https://github.com/MarkSun04HX/Easy-ML.git
+   ```
+2. Install the required packages:
+   ```
+   pip install -r requirements.txt
+   ```
+3. Run your first model:
+   ```
+   python example.py
+   ```
 
-### Random Forest
-- **Type**: Ensemble Learning
-- **Components**: 100 decision trees
-- **Strengths**: Robust, handles non-linear relationships
-- **RMSE**: 0.4523 ± margin of error
-- **Best for**: General-purpose predictions
+## File Structure
+- `models/` - Directory containing model implementations.
+- `data/` - Directory for storing input CSV files.
+- `requirements.txt` - File listing required packages.
+- `example.py` - An example script to demonstrate usage.
 
-### XGBoost
-- **Type**: Gradient Boosting
-- **Components**: Sequential tree ensemble
-- **Strengths**: High accuracy, fast training
-- **RMSE**: 0.3821 ± margin of error
-- **Best for**: Performance-critical applications
+## CSV Format Requirements
+- The CSV files should contain headers and should be structured with one row for each observation.
+- Ensure that all feature names are clearly defined and consistent with the model requirements.
 
-## Technical Stack 🛠️
+## Metrics Explanation
+- **Accuracy**: The ratio of correctly predicted observations to total observations.
+- **Precision**: The ratio of correctly predicted positive observations to the total predicted positives.
+- **Recall (Sensitivity)**: The ratio of correctly predicted positive observations to all actual positives.
+- **F1 Score**: The weighted average of Precision and Recall.
 
-- **Frontend**: HTML5, CSS3, JavaScript (Vanilla)
-- **Styling**: Custom CSS with gradients and animations
-- **Models**: Random Forest & XGBoost (simulated)
-- **Responsive Design**: Mobile-first approach
+## Future Enhancements
+- Addition of more algorithms (e.g., Support Vector Machines, Neural Networks).
+- Improvement of documentation for each model's parameters and tuning.
+- Implementation of automated hyperparameter tuning methods.
 
-## Prediction Results 🎯
-
-The webpage displays:
-- **Prediction Value**: The model's predicted output
-- **RMSE**: Root Mean Square Error (model uncertainty)
-- **Confidence Range**: Upper and lower bounds of prediction
-- **Input Summary**: The features used for the prediction
-
-## Browser Support 🌐
-
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-
-## Installation 💻
-
-```bash
-# Clone the repository
-git clone https://github.com/MarkSun04HX/Prediction-Machine.git
-
-# Navigate to the directory
-cd Prediction-Machine
-
-# Open in browser (no server required for frontend)
-open index.html
-```
-
-## File Structure 📁
-
-```
-Prediction-Machine/
-├── index.html          # Main webpage with UI and logic
-├── README.md           # Project documentation
-└── LICENSE             # MIT License
-```
-
-## Future Enhancements 🚀
-
-- [ ] Backend API integration with real ML models
-- [ ] Database to store prediction history
-- [ ] Model comparison dashboard
-- [ ] CSV file upload for batch predictions
-- [ ] Model retraining interface
-- [ ] Advanced visualization charts
-- [ ] User authentication
-- [ ] Prediction accuracy tracking
-
-## Contributing 🤝
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License 📄
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Author ✍️
-
-**Mark Sun** - Initial work
-
-## Support 📧
-
-For issues, questions, or suggestions, please create a GitHub issue.
+---  
+This documentation is designed to assist users in understanding and utilizing the Easy-ML library effectively.
