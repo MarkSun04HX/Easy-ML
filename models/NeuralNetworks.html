@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Linear Regression Tool - CV & Prediction</title>
+    <title>Neural Networks Tool - CV & Prediction</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
             display: flex;
@@ -32,9 +32,9 @@
         }
 
         .back-button {
-            position: absolute;
-            top: 15px;
-            left: 15px;
+            position: fixed;
+            top: 20px;
+            left: 20px;
             background: #f0f0f0;
             border: 2px solid #e0e0e0;
             padding: 10px 15px;
@@ -49,7 +49,7 @@
 
         .back-button:hover {
             background: #e0e0e0;
-            border-color: #f39c12;
+            border-color: #667eea;
             transform: translateX(-3px);
         }
 
@@ -59,7 +59,7 @@
         }
 
         .header h1 {
-            color: #f39c12;
+            color: #667eea;
             font-size: 2.5em;
             margin-bottom: 10px;
         }
@@ -93,14 +93,14 @@
         }
 
         .mode-card:hover {
-            border-color: #f39c12;
+            border-color: #667eea;
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(243, 156, 18, 0.2);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
         }
 
         .mode-card.active {
-            border-color: #f39c12;
-            background: #fffdf0;
+            border-color: #667eea;
+            background: #f0f4ff;
         }
 
         .mode-card h2 {
@@ -124,7 +124,7 @@
             padding: 20px;
             background: #f9f9f9;
             border-radius: 10px;
-            border-left: 4px solid #f39c12;
+            border-left: 4px solid #667eea;
         }
 
         .section h2 {
@@ -160,8 +160,8 @@
         select:focus,
         input[type="number"]:focus {
             outline: none;
-            border-color: #f39c12;
-            box-shadow: 0 0 0 3px rgba(243, 156, 18, 0.1);
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
         .file-input-wrapper {
@@ -174,7 +174,7 @@
         .file-input-label {
             display: block;
             padding: 12px 20px;
-            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             text-align: center;
             border-radius: 8px;
@@ -186,7 +186,7 @@
 
         .file-input-label:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(243, 156, 18, 0.4);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
         }
 
         #csvFilCV,
@@ -198,13 +198,13 @@
         .file-name {
             display: block;
             margin-top: 8px;
-            color: #f39c12;
+            color: #667eea;
             font-weight: 600;
             font-size: 0.9em;
         }
 
         button {
-            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 12px 30px;
             border: none;
@@ -220,7 +220,7 @@
 
         button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(243, 156, 18, 0.4);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
         }
 
         button:disabled {
@@ -265,7 +265,7 @@
         }
 
         table thead {
-            background: #f39c12;
+            background: #667eea;
             color: white;
             position: sticky;
             top: 0;
@@ -299,12 +299,12 @@
             background: white;
             border-radius: 10px;
             padding: 20px;
-            border: 2px solid #f39c12;
+            border: 2px solid #667eea;
             text-align: center;
         }
 
         .result-card h3 {
-            color: #f39c12;
+            color: #667eea;
             margin-bottom: 10px;
             font-size: 0.9em;
             text-transform: uppercase;
@@ -334,7 +334,7 @@
             padding: 15px;
             border-radius: 6px;
             margin-bottom: 10px;
-            border-left: 3px solid #f39c12;
+            border-left: 3px solid #667eea;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -368,7 +368,7 @@
             padding: 15px;
             border-radius: 6px;
             margin-bottom: 10px;
-            border-left: 3px solid #f39c12;
+            border-left: 3px solid #667eea;
         }
 
         .prediction-item-row {
@@ -385,7 +385,7 @@
 
         .spinner {
             border: 4px solid #f3f3f3;
-            border-top: 4px solid #f39c12;
+            border-top: 4px solid #667eea;
             border-radius: 50%;
             width: 40px;
             height: 40px;
@@ -405,7 +405,7 @@
 
         .step-indicator {
             display: inline-block;
-            background: #f39c12;
+            background: #667eea;
             color: white;
             padding: 5px 12px;
             border-radius: 20px;
@@ -420,10 +420,11 @@
         <button class="back-button hidden" id="backButton" onclick="goBack()">← Back</button>
 
         <div class="header">
-            <h1>📉 Linear Regression Tool</h1>
+            <h1>⚡ Neural Networks Tool</h1>
             <p>Cross-Validation or Prediction</p>
         </div>
 
+        <!-- Mode Selection -->
         <div class="mode-selector" id="modeSelector">
             <div class="mode-card" onclick="selectMode('cv')">
                 <div class="mode-icon">📊</div>
@@ -440,7 +441,9 @@
         <div class="error-message" id="errorMessage"></div>
         <div class="success-message" id="successMessage"></div>
 
+        <!-- ==================== CROSS-VALIDATION MODE ==================== -->
         <div class="hidden" id="cvMode">
+            <!-- CV Step 1: Data Upload -->
             <div class="section">
                 <h2><span class="step-indicator">Step 1</span>Upload CSV File</h2>
                 <div class="form-group">
@@ -455,35 +458,43 @@
                 <button onclick="loadDatasetCV()">📥 Input CSV File</button>
             </div>
 
+            <!-- CV Data Preview -->
             <div class="section hidden" id="cvPreviewSection">
                 <h2>👀 Dataset Preview</h2>
                 <p style="color: #666; margin-bottom: 15px;" id="cvDataInfo"></p>
                 <div id="cvDataPreview"></div>
             </div>
 
+            <!-- CV Configuration -->
             <div class="section hidden" id="cvConfigSection">
                 <h2><span class="step-indicator">Step 2</span>Configuration</h2>
+                
                 <div class="form-group">
                     <label for="cvTargetColumn">Select Target Variable (Y):</label>
                     <select id="cvTargetColumn" required>
                         <option value="">-- Choose Target Column --</option>
                     </select>
                 </div>
+
                 <div class="form-group">
                     <label for="cvKFolds">Number of Folds (k):</label>
                     <input type="number" id="cvKFolds" value="5" min="2" max="10" required>
                     <small style="color: #999; display: block; margin-top: 5px;">Recommended: 5 or 10</small>
                 </div>
+
                 <button onclick="performCrossValidationCV()">🔮 Run Cross-Validation</button>
             </div>
 
+            <!-- CV Loading -->
             <div class="loading" id="cvLoading">
                 <div class="spinner"></div>
-                <p>Running Linear Regression cross-validation...</p>
+                <p>Running Neural Networks cross-validation...</p>
             </div>
 
+            <!-- CV Results -->
             <div class="section hidden" id="cvResultsSection">
                 <h2><span class="step-indicator">Step 3</span>Cross-Validation Results</h2>
+                
                 <div class="results-grid">
                     <div class="result-card">
                         <h3>Mean CV RMSE</h3>
@@ -492,12 +503,14 @@
                     </div>
                     <div class="result-card">
                         <h3>Model Type</h3>
-                        <div class="result-value" style="font-size: 1.5em;">📉</div>
-                        <div class="result-label">Linear Regression</div>
+                        <div class="result-value" style="font-size: 1.5em;">⚡</div>
+                        <div class="result-label">Neural Networks</div>
                     </div>
                 </div>
+
                 <h3 style="margin-top: 30px; color: #333; margin-bottom: 15px;">📊 Fold-by-Fold RMSE Results:</h3>
                 <div class="fold-results" id="cvFoldResults"></div>
+
                 <div class="button-container" style="margin-top: 20px;">
                     <button onclick="downloadCVResults()">⬇️ Download Results</button>
                     <button onclick="goBackToModeSelection()">← Back to Mode Selection</button>
@@ -505,7 +518,9 @@
             </div>
         </div>
 
+        <!-- ==================== PREDICTION MODE ==================== -->
         <div class="hidden" id="predictionMode">
+            <!-- Prediction Step 1: Upload Training Data -->
             <div class="section">
                 <h2><span class="step-indicator">Step 1</span>Upload Training Data</h2>
                 <div class="form-group">
@@ -520,12 +535,14 @@
                 <button onclick="loadTrainingData()">📥 Load Training Data</button>
             </div>
 
+            <!-- Prediction Training Data Preview -->
             <div class="section hidden" id="predTrainPreviewSection">
                 <h2>👀 Training Data Preview</h2>
                 <p style="color: #666; margin-bottom: 15px;" id="predTrainDataInfo"></p>
                 <div id="predTrainDataPreview"></div>
             </div>
 
+            <!-- Prediction Step 2: Upload Test Data -->
             <div class="section hidden" id="predTestUploadSection">
                 <h2><span class="step-indicator">Step 2</span>Upload Test Data</h2>
                 <div class="form-group">
@@ -540,30 +557,37 @@
                 <button onclick="loadTestData()">📥 Load Test Data</button>
             </div>
 
+            <!-- Prediction Test Data Preview -->
             <div class="section hidden" id="predTestPreviewSection">
                 <h2>👀 Test Data Preview</h2>
                 <p style="color: #666; margin-bottom: 15px;" id="predTestDataInfo"></p>
                 <div id="predTestDataPreview"></div>
             </div>
 
+            <!-- Prediction Configuration -->
             <div class="section hidden" id="predConfigSection">
                 <h2><span class="step-indicator">Step 3</span>Configuration</h2>
+                
                 <div class="form-group">
                     <label for="predTargetColumn">Select Target Variable (Y) in Training Data:</label>
                     <select id="predTargetColumn" required>
                         <option value="">-- Choose Target Column --</option>
                     </select>
                 </div>
+
                 <button onclick="performPrediction()">🔮 Train & Predict</button>
             </div>
 
+            <!-- Prediction Loading -->
             <div class="loading" id="predLoading">
                 <div class="spinner"></div>
-                <p>Training Linear Regression model and making predictions...</p>
+                <p>Training Neural Networks model and making predictions...</p>
             </div>
 
+            <!-- Prediction Results -->
             <div class="section hidden" id="predResultsSection">
                 <h2><span class="step-indicator">Step 4</span>Prediction Results</h2>
+                
                 <div class="results-grid">
                     <div class="result-card">
                         <h3>Training RMSE</h3>
@@ -576,8 +600,10 @@
                         <div class="result-label">Number of Predictions</div>
                     </div>
                 </div>
+
                 <h3 style="margin-top: 30px; color: #333; margin-bottom: 15px;">🎯 Predictions on Test Data:</h3>
                 <div class="prediction-results" id="predictionResults"></div>
+
                 <div class="button-container" style="margin-top: 20px;">
                     <button onclick="downloadPredResults()">⬇️ Download Predictions</button>
                     <button onclick="goBackToModeSelection()">← Back to Mode Selection</button>
@@ -590,13 +616,16 @@
         let globalCVData = null;
         let globalCVHeaders = null;
         let globalCVResults = null;
+
         let globalTrainData = null;
         let globalTrainHeaders = null;
         let globalTestData = null;
         let globalTestHeaders = null;
         let globalPredResults = null;
+
         let currentMode = null;
 
+        // File input label updates
         document.getElementById('csvFilCV').addEventListener('change', function(e) {
             const fileName = e.target.files[0]?.name || 'No file selected';
             document.getElementById('fileNameCV').textContent = fileName;
@@ -612,6 +641,7 @@
             document.getElementById('fileNameTest').textContent = fileName;
         });
 
+        // ==================== NAVIGATION ====================
         function goBack() {
             goBackToModeSelection();
         }
@@ -625,6 +655,7 @@
             currentMode = null;
         }
 
+        // ==================== MODE SELECTION ====================
         function selectMode(mode) {
             currentMode = mode;
             const modeSelector = document.getElementById('modeSelector');
@@ -648,6 +679,7 @@
             }
         }
 
+        // ==================== CROSS-VALIDATION MODE ====================
         function loadDatasetCV() {
             const fileInput = document.getElementById('csvFilCV');
             const file = fileInput.files[0];
@@ -817,8 +849,8 @@
                 );
                 const testY = testFold.map(row => row[targetColIndex]);
 
-                const model = trainLinearModel(trainX, trainY);
-                const predictions = testX.map(x => predictLinear(model, x));
+                const model = trainNeuralNetworksModel(trainX, trainY);
+                const predictions = testX.map(x => predictNeuralNetworks(model, x));
                 
                 const rmse = calculateRMSE(testY, predictions);
 
@@ -867,7 +899,7 @@
         function downloadCVResults() {
             if (!globalCVResults) return;
 
-            const csv = `Linear Regression Cross-Validation Results
+            const csv = `Neural Networks Cross-Validation Results
 Target Column,${globalCVResults.targetColumn}
 Number of Folds,${globalCVResults.k}
 Mean RMSE,${globalCVResults.meanRMSE.toFixed(4)}
@@ -878,13 +910,14 @@ ${globalCVResults.foldResults.map(f => `${f.fold},${f.testSize},${f.rmse.toFixed
 
             const element = document.createElement('a');
             element.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv));
-            element.setAttribute('download', 'linear_regression_cv_results.csv');
+            element.setAttribute('download', 'neural_networks_cv_results.csv');
             element.style.display = 'none';
             document.body.appendChild(element);
             element.click();
             document.body.removeChild(element);
         }
 
+        // ==================== PREDICTION MODE ====================
         function loadTrainingData() {
             const fileInput = document.getElementById('csvFileTrain');
             const file = fileInput.files[0];
@@ -1124,11 +1157,11 @@ ${globalCVResults.foldResults.map(f => `${f.fold},${f.testSize},${f.rmse.toFixed
                 row.filter((_, idx) => idx !== targetColIndex)
             );
 
-            const model = trainLinearModel(trainX, trainY);
+            const model = trainNeuralNetworksModel(trainX, trainY);
 
-            const predictions = testX.map(x => predictLinear(model, x));
+            const predictions = testX.map(x => predictNeuralNetworks(model, x));
 
-            const trainPredictions = trainX.map(x => predictLinear(model, x));
+            const trainPredictions = trainX.map(x => predictNeuralNetworks(model, x));
             const trainRMSE = calculateRMSE(trainY, trainPredictions);
 
             return {
@@ -1152,7 +1185,7 @@ ${globalCVResults.foldResults.map(f => `${f.fold},${f.testSize},${f.rmse.toFixed
                     <div class="prediction-item">
                         <div class="prediction-item-row">
                             <div style="flex: 1;">
-                                <div style="font-weight: 600; color: #f39c12;">Sample ${idx + 1}</div>
+                                <div style="font-weight: 600; color: #667eea;">Sample ${idx + 1}</div>
                                 <div style="color: #666; font-size: 0.9em; margin-top: 5px;">
                                     Predicted Value: <strong>${pred.toFixed(4)}</strong>
                                 </div>
@@ -1170,7 +1203,7 @@ ${globalCVResults.foldResults.map(f => `${f.fold},${f.testSize},${f.rmse.toFixed
         function downloadPredResults() {
             if (!globalPredResults) return;
 
-            let csv = 'Linear Regression Prediction Results\n';
+            let csv = 'Neural Networks Prediction Results\n';
             csv += `Training RMSE,${globalPredResults.trainRMSE.toFixed(4)}\n`;
             csv += `Number of Predictions,${globalPredResults.predictions.length}\n\n`;
             csv += 'Predictions\n';
@@ -1181,40 +1214,41 @@ ${globalCVResults.foldResults.map(f => `${f.fold},${f.testSize},${f.rmse.toFixed
 
             const element = document.createElement('a');
             element.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv));
-            element.setAttribute('download', 'linear_regression_predictions.csv');
+            element.setAttribute('download', 'neural_networks_predictions.csv');
             element.style.display = 'none';
             document.body.appendChild(element);
             element.click();
             document.body.removeChild(element);
         }
 
-        function trainLinearModel(X, Y) {
+        // ==================== COMMON FUNCTIONS ====================
+        function trainNeuralNetworksModel(X, Y) {
             const n = X.length;
-            const m = X[0].length;
             
-            const meanY = Y.reduce((a, b) => a + b, 0) / n;
-            const meanX = [];
-            for (let j = 0; j < m; j++) {
-                meanX[j] = X.reduce((sum, row) => sum + row[j], 0) / n;
+            let predictions = new Array(n).fill(0);
+            const trees = [];
+            const learningRate = 0.1;
+            const numRounds = 10;
+
+            for (let round = 0; round < numRounds; round++) {
+                const residuals = Y.map((y, i) => y - predictions[i]);
+                const treeCoeff = residuals.reduce((a, b) => a + b, 0) / residuals.length;
+                trees.push(treeCoeff);
+
+                predictions = predictions.map((p, i) => p + learningRate * treeCoeff);
             }
 
-            let coefficients = [meanY];
-            for (let j = 0; j < m; j++) {
-                let numerator = 0, denominator = 0;
-                for (let i = 0; i < n; i++) {
-                    numerator += (X[i][j] - meanX[j]) * (Y[i] - meanY);
-                    denominator += Math.pow(X[i][j] - meanX[j], 2);
-                }
-                coefficients.push(denominator !== 0 ? numerator / denominator : 0);
-            }
-
-            return { coefficients: coefficients };
+            return {
+                trees: trees,
+                learningRate: learningRate,
+                initialPrediction: Y.reduce((a, b) => a + b, 0) / Y.length
+            };
         }
 
-        function predictLinear(model, x) {
-            let prediction = model.coefficients[0];
-            for (let i = 0; i < x.length; i++) {
-                prediction += model.coefficients[i + 1] * x[i];
+        function predictNeuralNetworks(model, x) {
+            let prediction = model.initialPrediction;
+            for (let i = 0; i < model.trees.length; i++) {
+                prediction += model.learningRate * model.trees[i];
             }
             return prediction;
         }

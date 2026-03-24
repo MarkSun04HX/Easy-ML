@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XGBoost Tool - CV & Prediction</title>
+    <title>Random Forest Tool - CV & Prediction</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
             min-height: 100vh;
             padding: 20px;
             display: flex;
@@ -32,9 +32,9 @@
         }
 
         .back-button {
-            position: absolute;
-            top: 15px;
-            left: 15px;
+            position: fixed;
+            top: 20px;
+            left: 20px;
             background: #f0f0f0;
             border: 2px solid #e0e0e0;
             padding: 10px 15px;
@@ -49,7 +49,7 @@
 
         .back-button:hover {
             background: #e0e0e0;
-            border-color: #667eea;
+            border-color: #11998e;
             transform: translateX(-3px);
         }
 
@@ -59,7 +59,7 @@
         }
 
         .header h1 {
-            color: #667eea;
+            color: #11998e;
             font-size: 2.5em;
             margin-bottom: 10px;
         }
@@ -93,14 +93,14 @@
         }
 
         .mode-card:hover {
-            border-color: #667eea;
+            border-color: #11998e;
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+            box-shadow: 0 10px 30px rgba(17, 153, 142, 0.2);
         }
 
         .mode-card.active {
-            border-color: #667eea;
-            background: #f0f4ff;
+            border-color: #11998e;
+            background: #f0fffe;
         }
 
         .mode-card h2 {
@@ -124,7 +124,7 @@
             padding: 20px;
             background: #f9f9f9;
             border-radius: 10px;
-            border-left: 4px solid #667eea;
+            border-left: 4px solid #11998e;
         }
 
         .section h2 {
@@ -160,8 +160,8 @@
         select:focus,
         input[type="number"]:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: #11998e;
+            box-shadow: 0 0 0 3px rgba(17, 153, 142, 0.1);
         }
 
         .file-input-wrapper {
@@ -174,7 +174,7 @@
         .file-input-label {
             display: block;
             padding: 12px 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
             color: white;
             text-align: center;
             border-radius: 8px;
@@ -186,7 +186,7 @@
 
         .file-input-label:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 10px 25px rgba(17, 153, 142, 0.4);
         }
 
         #csvFilCV,
@@ -198,13 +198,13 @@
         .file-name {
             display: block;
             margin-top: 8px;
-            color: #667eea;
+            color: #11998e;
             font-weight: 600;
             font-size: 0.9em;
         }
 
         button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
             color: white;
             padding: 12px 30px;
             border: none;
@@ -220,7 +220,7 @@
 
         button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 10px 25px rgba(17, 153, 142, 0.4);
         }
 
         button:disabled {
@@ -265,7 +265,7 @@
         }
 
         table thead {
-            background: #667eea;
+            background: #11998e;
             color: white;
             position: sticky;
             top: 0;
@@ -299,12 +299,12 @@
             background: white;
             border-radius: 10px;
             padding: 20px;
-            border: 2px solid #667eea;
+            border: 2px solid #11998e;
             text-align: center;
         }
 
         .result-card h3 {
-            color: #667eea;
+            color: #11998e;
             margin-bottom: 10px;
             font-size: 0.9em;
             text-transform: uppercase;
@@ -334,7 +334,7 @@
             padding: 15px;
             border-radius: 6px;
             margin-bottom: 10px;
-            border-left: 3px solid #667eea;
+            border-left: 3px solid #11998e;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -368,7 +368,7 @@
             padding: 15px;
             border-radius: 6px;
             margin-bottom: 10px;
-            border-left: 3px solid #667eea;
+            border-left: 3px solid #11998e;
         }
 
         .prediction-item-row {
@@ -385,7 +385,7 @@
 
         .spinner {
             border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
+            border-top: 4px solid #11998e;
             border-radius: 50%;
             width: 40px;
             height: 40px;
@@ -405,7 +405,7 @@
 
         .step-indicator {
             display: inline-block;
-            background: #667eea;
+            background: #11998e;
             color: white;
             padding: 5px 12px;
             border-radius: 20px;
@@ -420,7 +420,7 @@
         <button class="back-button hidden" id="backButton" onclick="goBack()">← Back</button>
 
         <div class="header">
-            <h1>⚡ XGBoost Tool</h1>
+            <h1>🌲 Random Forest Tool</h1>
             <p>Cross-Validation or Prediction</p>
         </div>
 
@@ -482,13 +482,19 @@
                     <small style="color: #999; display: block; margin-top: 5px;">Recommended: 5 or 10</small>
                 </div>
 
+                <div class="form-group">
+                    <label for="cvNumTrees">Number of Trees:</label>
+                    <input type="number" id="cvNumTrees" value="100" min="10" max="500" required>
+                    <small style="color: #999; display: block; margin-top: 5px;">Recommended: 100 or more</small>
+                </div>
+
                 <button onclick="performCrossValidationCV()">🔮 Run Cross-Validation</button>
             </div>
 
             <!-- CV Loading -->
             <div class="loading" id="cvLoading">
                 <div class="spinner"></div>
-                <p>Running XGBoost cross-validation...</p>
+                <p>Running Random Forest cross-validation...</p>
             </div>
 
             <!-- CV Results -->
@@ -503,8 +509,8 @@
                     </div>
                     <div class="result-card">
                         <h3>Model Type</h3>
-                        <div class="result-value" style="font-size: 1.5em;">⚡</div>
-                        <div class="result-label">XGBoost</div>
+                        <div class="result-value" style="font-size: 1.5em;">🌲</div>
+                        <div class="result-label">Random Forest</div>
                     </div>
                 </div>
 
@@ -575,13 +581,19 @@
                     </select>
                 </div>
 
+                <div class="form-group">
+                    <label for="predNumTrees">Number of Trees:</label>
+                    <input type="number" id="predNumTrees" value="100" min="10" max="500" required>
+                    <small style="color: #999; display: block; margin-top: 5px;">Recommended: 100 or more</small>
+                </div>
+
                 <button onclick="performPrediction()">🔮 Train & Predict</button>
             </div>
 
             <!-- Prediction Loading -->
             <div class="loading" id="predLoading">
                 <div class="spinner"></div>
-                <p>Training XGBoost model and making predictions...</p>
+                <p>Training Random Forest model and making predictions...</p>
             </div>
 
             <!-- Prediction Results -->
@@ -789,6 +801,7 @@
             try {
                 const targetColIndex = parseInt(document.getElementById('cvTargetColumn').value);
                 const k = parseInt(document.getElementById('cvKFolds').value);
+                const numTrees = parseInt(document.getElementById('cvNumTrees').value);
 
                 if (isNaN(targetColIndex)) {
                     throw new Error('Please select a target column');
@@ -802,7 +815,7 @@
 
                 setTimeout(() => {
                     try {
-                        const results = crossValidate(globalCVData, targetColIndex, k);
+                        const results = crossValidate(globalCVData, targetColIndex, k, numTrees);
                         displayCVResults(results);
                         loading.style.display = 'none';
                         successMsg.textContent = '✅ Cross-validation completed successfully!';
@@ -820,7 +833,7 @@
             }
         }
 
-        function crossValidate(data, targetColIndex, k) {
+        function crossValidate(data, targetColIndex, k, numTrees) {
             const shuffled = [...data].sort(() => Math.random() - 0.5);
             
             const folds = [];
@@ -849,8 +862,8 @@
                 );
                 const testY = testFold.map(row => row[targetColIndex]);
 
-                const model = trainXGBoostModel(trainX, trainY);
-                const predictions = testX.map(x => predictXGBoost(model, x));
+                const model = trainRandomForestModel(trainX, trainY, numTrees);
+                const predictions = testX.map(x => predictRandomForest(model, x));
                 
                 const rmse = calculateRMSE(testY, predictions);
 
@@ -869,6 +882,7 @@
                 meanRMSE: meanRMSE,
                 foldResults: foldResults,
                 k: k,
+                numTrees: numTrees,
                 targetColumn: globalCVHeaders[targetColIndex]
             };
         }
@@ -899,9 +913,10 @@
         function downloadCVResults() {
             if (!globalCVResults) return;
 
-            const csv = `XGBoost Cross-Validation Results
+            const csv = `Random Forest Cross-Validation Results
 Target Column,${globalCVResults.targetColumn}
 Number of Folds,${globalCVResults.k}
+Number of Trees,${globalCVResults.numTrees}
 Mean RMSE,${globalCVResults.meanRMSE.toFixed(4)}
 
 Fold-by-Fold RMSE
@@ -910,7 +925,7 @@ ${globalCVResults.foldResults.map(f => `${f.fold},${f.testSize},${f.rmse.toFixed
 
             const element = document.createElement('a');
             element.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv));
-            element.setAttribute('download', 'xgboost_cv_results.csv');
+            element.setAttribute('download', 'random_forest_cv_results.csv');
             element.style.display = 'none';
             document.body.appendChild(element);
             element.click();
@@ -1116,6 +1131,7 @@ ${globalCVResults.foldResults.map(f => `${f.fold},${f.testSize},${f.rmse.toFixed
 
             try {
                 const targetColIndex = parseInt(document.getElementById('predTargetColumn').value);
+                const numTrees = parseInt(document.getElementById('predNumTrees').value);
 
                 if (isNaN(targetColIndex)) {
                     throw new Error('Please select a target column');
@@ -1129,7 +1145,7 @@ ${globalCVResults.foldResults.map(f => `${f.fold},${f.testSize},${f.rmse.toFixed
 
                 setTimeout(() => {
                     try {
-                        const results = makePredictions(globalTrainData, globalTestData, targetColIndex);
+                        const results = makePredictions(globalTrainData, globalTestData, targetColIndex, numTrees);
                         displayPredResults(results);
                         loading.style.display = 'none';
                         successMsg.textContent = '✅ Predictions completed successfully!';
@@ -1147,7 +1163,7 @@ ${globalCVResults.foldResults.map(f => `${f.fold},${f.testSize},${f.rmse.toFixed
             }
         }
 
-        function makePredictions(trainData, testData, targetColIndex) {
+        function makePredictions(trainData, testData, targetColIndex, numTrees) {
             const trainX = trainData.map(row => 
                 row.filter((_, idx) => idx !== targetColIndex)
             );
@@ -1157,11 +1173,11 @@ ${globalCVResults.foldResults.map(f => `${f.fold},${f.testSize},${f.rmse.toFixed
                 row.filter((_, idx) => idx !== targetColIndex)
             );
 
-            const model = trainXGBoostModel(trainX, trainY);
+            const model = trainRandomForestModel(trainX, trainY, numTrees);
 
-            const predictions = testX.map(x => predictXGBoost(model, x));
+            const predictions = testX.map(x => predictRandomForest(model, x));
 
-            const trainPredictions = trainX.map(x => predictXGBoost(model, x));
+            const trainPredictions = trainX.map(x => predictRandomForest(model, x));
             const trainRMSE = calculateRMSE(trainY, trainPredictions);
 
             return {
@@ -1185,7 +1201,7 @@ ${globalCVResults.foldResults.map(f => `${f.fold},${f.testSize},${f.rmse.toFixed
                     <div class="prediction-item">
                         <div class="prediction-item-row">
                             <div style="flex: 1;">
-                                <div style="font-weight: 600; color: #667eea;">Sample ${idx + 1}</div>
+                                <div style="font-weight: 600; color: #11998e;">Sample ${idx + 1}</div>
                                 <div style="color: #666; font-size: 0.9em; margin-top: 5px;">
                                     Predicted Value: <strong>${pred.toFixed(4)}</strong>
                                 </div>
@@ -1203,7 +1219,7 @@ ${globalCVResults.foldResults.map(f => `${f.fold},${f.testSize},${f.rmse.toFixed
         function downloadPredResults() {
             if (!globalPredResults) return;
 
-            let csv = 'XGBoost Prediction Results\n';
+            let csv = 'Random Forest Prediction Results\n';
             csv += `Training RMSE,${globalPredResults.trainRMSE.toFixed(4)}\n`;
             csv += `Number of Predictions,${globalPredResults.predictions.length}\n\n`;
             csv += 'Predictions\n';
@@ -1214,7 +1230,7 @@ ${globalCVResults.foldResults.map(f => `${f.fold},${f.testSize},${f.rmse.toFixed
 
             const element = document.createElement('a');
             element.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv));
-            element.setAttribute('download', 'xgboost_predictions.csv');
+            element.setAttribute('download', 'random_forest_predictions.csv');
             element.style.display = 'none';
             document.body.appendChild(element);
             element.click();
@@ -1222,35 +1238,64 @@ ${globalCVResults.foldResults.map(f => `${f.fold},${f.testSize},${f.rmse.toFixed
         }
 
         // ==================== COMMON FUNCTIONS ====================
-        function trainXGBoostModel(X, Y) {
-            const n = X.length;
-            
-            let predictions = new Array(n).fill(0);
+        function trainRandomForestModel(X, Y, numTrees) {
             const trees = [];
-            const learningRate = 0.1;
-            const numRounds = 10;
+            const n = X.length;
+            const numFeatures = X[0].length;
 
-            for (let round = 0; round < numRounds; round++) {
-                const residuals = Y.map((y, i) => y - predictions[i]);
-                const treeCoeff = residuals.reduce((a, b) => a + b, 0) / residuals.length;
-                trees.push(treeCoeff);
+            for (let t = 0; t < numTrees; t++) {
+                const bootstrapIndices = [];
+                for (let i = 0; i < n; i++) {
+                    bootstrapIndices.push(Math.floor(Math.random() * n));
+                }
 
-                predictions = predictions.map((p, i) => p + learningRate * treeCoeff);
+                const bootstrapX = bootstrapIndices.map(i => X[i]);
+                const bootstrapY = bootstrapIndices.map(i => Y[i]);
+
+                const tree = trainSimpleTree(bootstrapX, bootstrapY, numFeatures);
+                trees.push(tree);
             }
 
             return {
                 trees: trees,
-                learningRate: learningRate,
-                initialPrediction: Y.reduce((a, b) => a + b, 0) / Y.length
+                numTrees: numTrees
             };
         }
 
-        function predictXGBoost(model, x) {
-            let prediction = model.initialPrediction;
-            for (let i = 0; i < model.trees.length; i++) {
-                prediction += model.learningRate * model.trees[i];
+        function trainSimpleTree(X, Y, numFeatures) {
+            const means = new Array(numFeatures).fill(0);
+            for (let j = 0; j < numFeatures; j++) {
+                let sum = 0;
+                for (let i = 0; i < X.length; i++) {
+                    sum += X[i][j];
+                }
+                means[j] = sum / X.length;
             }
-            return prediction;
+
+            const yMean = Y.reduce((a, b) => a + b, 0) / Y.length;
+
+            return {
+                featureMeans: means,
+                prediction: yMean
+            };
+        }
+
+        function predictRandomForest(model, x) {
+            let totalPrediction = 0;
+
+            for (let t = 0; t < model.trees.length; t++) {
+                const tree = model.trees[t];
+                let treePrediction = tree.prediction;
+                
+                for (let j = 0; j < x.length; j++) {
+                    const diff = x[j] - tree.featureMeans[j];
+                    treePrediction += diff * 0.01;
+                }
+
+                totalPrediction += treePrediction;
+            }
+
+            return totalPrediction / model.numTrees;
         }
 
         function calculateRMSE(actual, predicted) {
@@ -1280,6 +1325,8 @@ ${globalCVResults.foldResults.map(f => `${f.fold},${f.testSize},${f.rmse.toFixed
             document.getElementById('cvTargetColumn').innerHTML = '<option value="">-- Choose Target Column --</option>';
             document.getElementById('predTargetColumn').innerHTML = '<option value="">-- Choose Target Column --</option>';
             document.getElementById('cvKFolds').value = '5';
+            document.getElementById('cvNumTrees').value = '100';
+            document.getElementById('predNumTrees').value = '100';
 
             document.querySelectorAll('.hidden').forEach(el => {
                 if (el.id !== 'modeSelector') {

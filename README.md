@@ -1,28 +1,35 @@
 # Easy-ML Documentation
 
 ## Overview
-Easy-ML is a user-friendly machine learning library that provides easy-to-use implementations of popular algorithms. This documentation covers the setup instructions, file structure, CSV format requirements, model explanations, metrics, and future enhancements.
+Easy-ML is a user-friendly machine learning library that provides easy-to-use implementations of popular algorithms. This documentation covers setup, file structure, CSV format requirements, per-model feature requirements, and evaluation metrics.
 
 ## Supported Models
 1. **XGBoost**  
-   XGBoost is an optimized distributed gradient boosting library designed to be highly efficient, flexible, and portable.
-   - **Features**: Handles missing data, supports multiple languages, and built-in cross-validation.
+   XGBoost is an optimized gradient boosting approach designed for high performance on tabular data.
 
 2. **Random Forest**  
-   Random Forest is an ensemble learning method that constructs multiple decision trees during training and merges them to improve accuracy.
-   - **Features**: Reduces overfitting, handles large datasets, and provides feature importance.
+   Random Forest builds many trees and aggregates predictions to improve robustness and reduce overfitting.
 
 3. **Linear Regression**  
-   A simple algorithm that models the relationship between a dependent variable and one or more independent variables.
-   - **Features**: Easy to implement, interpretable results, and gives overall trend.
+   A foundational model that fits a linear relationship between input features and a numeric target.
 
 4. **Elastic Net**  
-   Combines L1 (Lasso) and L2 (Ridge) regularization techniques to enhance model performance in the presence of correlated features.
-   - **Features**: Tackle multicollinearity, sparse solutions, and flexibility in penalty formulation.
+   Combines L1 and L2 regularization for stable linear modeling with correlated features.
 
 5. **Decision Tree**  
-   A non-parametric supervised learning method used for classification and regression.
-   - **Features**: Easy to interpret, handles categorical data efficiently, and requires little data preprocessing.
+   A tree-based model that recursively splits features into decision rules.
+
+6. **Neural Networks**  
+   Layer-based models for learning non-linear patterns from numerical feature vectors.
+
+7. **CatBoost**  
+   Gradient boosting with strong handling for tabular data and categorical features.
+
+8. **SVMs**  
+   Support Vector Machines that separate data with maximum-margin hyperplanes (or kernels).
+
+9. **KNNs**  
+   K-Nearest Neighbors predicts from the local neighborhood of similar samples.
 
 ## Setup Instructions
 1. Clone the repository:
@@ -39,25 +46,37 @@ Easy-ML is a user-friendly machine learning library that provides easy-to-use im
    ```
 
 ## File Structure
-- `models/` - Directory containing model implementations.
-- `data/` - Directory for storing input CSV files.
-- `requirements.txt` - File listing required packages.
-- `example.py` - An example script to demonstrate usage.
+- `models/` - HTML tools for each model.
+- `data/` - Input CSV files.
+- `requirements.txt` - Python dependencies.
+- `example.py` - Example usage script.
 
 ## CSV Format Requirements
-- The CSV files should contain headers and should be structured with one row for each observation.
-- Ensure that all feature names are clearly defined and consistent with the model requirements.
+- CSV files must include a header row.
+- Each row should represent one observation/sample.
+- Missing values should be handled before training (or consistently represented).
+- Train/test files used together must follow the same schema.
+
+## Feature Type Requirements by Model
+- **Linear Regression / Elastic Net / Neural Networks / SVMs / KNNs**: all input features must be numeric.
+- **XGBoost / Random Forest / Decision Tree / CatBoost**: this project’s HTML tools currently expect numeric input values in CSVs. If categorical fields exist, encode them to numeric values first.
+- **Target column (Y)**:
+  - For current pages and metrics (RMSE), the target is treated as numeric.
+  - If you run a classification task, encode class labels consistently and interpret RMSE with care.
+
+## Practical Notes
+- Scale-sensitive models (especially **SVMs**, **KNNs**, and **Neural Networks**) generally perform better when features are normalized/standardized.
+- Keep feature columns in the same order between training and test files.
+- Avoid mixing text and numeric values within the same column.
 
 ## Metrics Explanation
-- **Accuracy**: The ratio of correctly predicted observations to total observations.
-- **Precision**: The ratio of correctly predicted positive observations to the total predicted positives.
-- **Recall (Sensitivity)**: The ratio of correctly predicted positive observations to all actual positives.
-- **F1 Score**: The weighted average of Precision and Recall.
+- **RMSE (Root Mean Square Error)**: primary metric used across current model pages; lower values indicate better fit for numeric targets.
+- **Accuracy / Precision / Recall / F1**: classification metrics you may add or use in future extensions.
 
 ## Future Enhancements
-- Addition of more algorithms (e.g., Support Vector Machines, Neural Networks).
-- Improvement of documentation for each model's parameters and tuning.
-- Implementation of automated hyperparameter tuning methods.
+- Add explicit preprocessing utilities (encoding, scaling, missing-value handling).
+- Expand model-specific validation checks and warnings in each HTML page.
+- Add additional metrics for classification workflows.
 
----  
-This documentation is designed to assist users in understanding and utilizing the Easy-ML library effectively.
+---
+This documentation is designed to help you prepare data correctly and use Easy-ML model tools with fewer input-format issues.

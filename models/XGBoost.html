@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Decision Tree Tool - CV & Prediction</title>
+    <title>XGBoost Tool - CV & Prediction</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
             display: flex;
@@ -32,9 +32,9 @@
         }
 
         .back-button {
-            position: absolute;
-            top: 15px;
-            left: 15px;
+            position: fixed;
+            top: 20px;
+            left: 20px;
             background: #f0f0f0;
             border: 2px solid #e0e0e0;
             padding: 10px 15px;
@@ -49,7 +49,7 @@
 
         .back-button:hover {
             background: #e0e0e0;
-            border-color: #9b59b6;
+            border-color: #667eea;
             transform: translateX(-3px);
         }
 
@@ -59,7 +59,7 @@
         }
 
         .header h1 {
-            color: #9b59b6;
+            color: #667eea;
             font-size: 2.5em;
             margin-bottom: 10px;
         }
@@ -93,14 +93,14 @@
         }
 
         .mode-card:hover {
-            border-color: #9b59b6;
+            border-color: #667eea;
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(155, 89, 182, 0.2);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
         }
 
         .mode-card.active {
-            border-color: #9b59b6;
-            background: #faf8ff;
+            border-color: #667eea;
+            background: #f0f4ff;
         }
 
         .mode-card h2 {
@@ -124,7 +124,7 @@
             padding: 20px;
             background: #f9f9f9;
             border-radius: 10px;
-            border-left: 4px solid #9b59b6;
+            border-left: 4px solid #667eea;
         }
 
         .section h2 {
@@ -160,8 +160,8 @@
         select:focus,
         input[type="number"]:focus {
             outline: none;
-            border-color: #9b59b6;
-            box-shadow: 0 0 0 3px rgba(155, 89, 182, 0.1);
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
         .file-input-wrapper {
@@ -174,7 +174,7 @@
         .file-input-label {
             display: block;
             padding: 12px 20px;
-            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             text-align: center;
             border-radius: 8px;
@@ -186,7 +186,7 @@
 
         .file-input-label:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(155, 89, 182, 0.4);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
         }
 
         #csvFilCV,
@@ -198,13 +198,13 @@
         .file-name {
             display: block;
             margin-top: 8px;
-            color: #9b59b6;
+            color: #667eea;
             font-weight: 600;
             font-size: 0.9em;
         }
 
         button {
-            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 12px 30px;
             border: none;
@@ -220,7 +220,7 @@
 
         button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(155, 89, 182, 0.4);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
         }
 
         button:disabled {
@@ -265,7 +265,7 @@
         }
 
         table thead {
-            background: #9b59b6;
+            background: #667eea;
             color: white;
             position: sticky;
             top: 0;
@@ -299,12 +299,12 @@
             background: white;
             border-radius: 10px;
             padding: 20px;
-            border: 2px solid #9b59b6;
+            border: 2px solid #667eea;
             text-align: center;
         }
 
         .result-card h3 {
-            color: #9b59b6;
+            color: #667eea;
             margin-bottom: 10px;
             font-size: 0.9em;
             text-transform: uppercase;
@@ -334,7 +334,7 @@
             padding: 15px;
             border-radius: 6px;
             margin-bottom: 10px;
-            border-left: 3px solid #9b59b6;
+            border-left: 3px solid #667eea;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -368,7 +368,7 @@
             padding: 15px;
             border-radius: 6px;
             margin-bottom: 10px;
-            border-left: 3px solid #9b59b6;
+            border-left: 3px solid #667eea;
         }
 
         .prediction-item-row {
@@ -385,7 +385,7 @@
 
         .spinner {
             border: 4px solid #f3f3f3;
-            border-top: 4px solid #9b59b6;
+            border-top: 4px solid #667eea;
             border-radius: 50%;
             width: 40px;
             height: 40px;
@@ -405,7 +405,7 @@
 
         .step-indicator {
             display: inline-block;
-            background: #9b59b6;
+            background: #667eea;
             color: white;
             padding: 5px 12px;
             border-radius: 20px;
@@ -420,10 +420,11 @@
         <button class="back-button hidden" id="backButton" onclick="goBack()">← Back</button>
 
         <div class="header">
-            <h1>🌳 Decision Tree Tool</h1>
+            <h1>⚡ XGBoost Tool</h1>
             <p>Cross-Validation or Prediction</p>
         </div>
 
+        <!-- Mode Selection -->
         <div class="mode-selector" id="modeSelector">
             <div class="mode-card" onclick="selectMode('cv')">
                 <div class="mode-icon">📊</div>
@@ -440,7 +441,9 @@
         <div class="error-message" id="errorMessage"></div>
         <div class="success-message" id="successMessage"></div>
 
+        <!-- ==================== CROSS-VALIDATION MODE ==================== -->
         <div class="hidden" id="cvMode">
+            <!-- CV Step 1: Data Upload -->
             <div class="section">
                 <h2><span class="step-indicator">Step 1</span>Upload CSV File</h2>
                 <div class="form-group">
@@ -455,40 +458,43 @@
                 <button onclick="loadDatasetCV()">📥 Input CSV File</button>
             </div>
 
+            <!-- CV Data Preview -->
             <div class="section hidden" id="cvPreviewSection">
                 <h2>👀 Dataset Preview</h2>
                 <p style="color: #666; margin-bottom: 15px;" id="cvDataInfo"></p>
                 <div id="cvDataPreview"></div>
             </div>
 
+            <!-- CV Configuration -->
             <div class="section hidden" id="cvConfigSection">
                 <h2><span class="step-indicator">Step 2</span>Configuration</h2>
+                
                 <div class="form-group">
                     <label for="cvTargetColumn">Select Target Variable (Y):</label>
                     <select id="cvTargetColumn" required>
                         <option value="">-- Choose Target Column --</option>
                     </select>
                 </div>
+
                 <div class="form-group">
                     <label for="cvKFolds">Number of Folds (k):</label>
                     <input type="number" id="cvKFolds" value="5" min="2" max="10" required>
                     <small style="color: #999; display: block; margin-top: 5px;">Recommended: 5 or 10</small>
                 </div>
-                <div class="form-group">
-                    <label for="cvMaxDepth">Max Tree Depth:</label>
-                    <input type="number" id="cvMaxDepth" value="5" min="1" max="20" required>
-                    <small style="color: #999; display: block; margin-top: 5px;">Default: 5</small>
-                </div>
+
                 <button onclick="performCrossValidationCV()">🔮 Run Cross-Validation</button>
             </div>
 
+            <!-- CV Loading -->
             <div class="loading" id="cvLoading">
                 <div class="spinner"></div>
-                <p>Running Decision Tree cross-validation...</p>
+                <p>Running XGBoost cross-validation...</p>
             </div>
 
+            <!-- CV Results -->
             <div class="section hidden" id="cvResultsSection">
                 <h2><span class="step-indicator">Step 3</span>Cross-Validation Results</h2>
+                
                 <div class="results-grid">
                     <div class="result-card">
                         <h3>Mean CV RMSE</h3>
@@ -497,12 +503,14 @@
                     </div>
                     <div class="result-card">
                         <h3>Model Type</h3>
-                        <div class="result-value" style="font-size: 1.5em;">🌳</div>
-                        <div class="result-label">Decision Tree</div>
+                        <div class="result-value" style="font-size: 1.5em;">⚡</div>
+                        <div class="result-label">XGBoost</div>
                     </div>
                 </div>
+
                 <h3 style="margin-top: 30px; color: #333; margin-bottom: 15px;">📊 Fold-by-Fold RMSE Results:</h3>
                 <div class="fold-results" id="cvFoldResults"></div>
+
                 <div class="button-container" style="margin-top: 20px;">
                     <button onclick="downloadCVResults()">⬇️ Download Results</button>
                     <button onclick="goBackToModeSelection()">← Back to Mode Selection</button>
@@ -510,7 +518,9 @@
             </div>
         </div>
 
+        <!-- ==================== PREDICTION MODE ==================== -->
         <div class="hidden" id="predictionMode">
+            <!-- Prediction Step 1: Upload Training Data -->
             <div class="section">
                 <h2><span class="step-indicator">Step 1</span>Upload Training Data</h2>
                 <div class="form-group">
@@ -525,12 +535,14 @@
                 <button onclick="loadTrainingData()">📥 Load Training Data</button>
             </div>
 
+            <!-- Prediction Training Data Preview -->
             <div class="section hidden" id="predTrainPreviewSection">
                 <h2>👀 Training Data Preview</h2>
                 <p style="color: #666; margin-bottom: 15px;" id="predTrainDataInfo"></p>
                 <div id="predTrainDataPreview"></div>
             </div>
 
+            <!-- Prediction Step 2: Upload Test Data -->
             <div class="section hidden" id="predTestUploadSection">
                 <h2><span class="step-indicator">Step 2</span>Upload Test Data</h2>
                 <div class="form-group">
@@ -545,35 +557,37 @@
                 <button onclick="loadTestData()">📥 Load Test Data</button>
             </div>
 
+            <!-- Prediction Test Data Preview -->
             <div class="section hidden" id="predTestPreviewSection">
                 <h2>👀 Test Data Preview</h2>
                 <p style="color: #666; margin-bottom: 15px;" id="predTestDataInfo"></p>
                 <div id="predTestDataPreview"></div>
             </div>
 
+            <!-- Prediction Configuration -->
             <div class="section hidden" id="predConfigSection">
                 <h2><span class="step-indicator">Step 3</span>Configuration</h2>
+                
                 <div class="form-group">
                     <label for="predTargetColumn">Select Target Variable (Y) in Training Data:</label>
                     <select id="predTargetColumn" required>
                         <option value="">-- Choose Target Column --</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="predMaxDepth">Max Tree Depth:</label>
-                    <input type="number" id="predMaxDepth" value="5" min="1" max="20" required>
-                    <small style="color: #999; display: block; margin-top: 5px;">Default: 5</small>
-                </div>
+
                 <button onclick="performPrediction()">🔮 Train & Predict</button>
             </div>
 
+            <!-- Prediction Loading -->
             <div class="loading" id="predLoading">
                 <div class="spinner"></div>
-                <p>Training Decision Tree model and making predictions...</p>
+                <p>Training XGBoost model and making predictions...</p>
             </div>
 
+            <!-- Prediction Results -->
             <div class="section hidden" id="predResultsSection">
                 <h2><span class="step-indicator">Step 4</span>Prediction Results</h2>
+                
                 <div class="results-grid">
                     <div class="result-card">
                         <h3>Training RMSE</h3>
@@ -586,8 +600,10 @@
                         <div class="result-label">Number of Predictions</div>
                     </div>
                 </div>
+
                 <h3 style="margin-top: 30px; color: #333; margin-bottom: 15px;">🎯 Predictions on Test Data:</h3>
                 <div class="prediction-results" id="predictionResults"></div>
+
                 <div class="button-container" style="margin-top: 20px;">
                     <button onclick="downloadPredResults()">⬇️ Download Predictions</button>
                     <button onclick="goBackToModeSelection()">← Back to Mode Selection</button>
@@ -600,13 +616,16 @@
         let globalCVData = null;
         let globalCVHeaders = null;
         let globalCVResults = null;
+
         let globalTrainData = null;
         let globalTrainHeaders = null;
         let globalTestData = null;
         let globalTestHeaders = null;
         let globalPredResults = null;
+
         let currentMode = null;
 
+        // File input label updates
         document.getElementById('csvFilCV').addEventListener('change', function(e) {
             const fileName = e.target.files[0]?.name || 'No file selected';
             document.getElementById('fileNameCV').textContent = fileName;
@@ -622,6 +641,7 @@
             document.getElementById('fileNameTest').textContent = fileName;
         });
 
+        // ==================== NAVIGATION ====================
         function goBack() {
             goBackToModeSelection();
         }
@@ -635,6 +655,7 @@
             currentMode = null;
         }
 
+        // ==================== MODE SELECTION ====================
         function selectMode(mode) {
             currentMode = mode;
             const modeSelector = document.getElementById('modeSelector');
@@ -658,6 +679,7 @@
             }
         }
 
+        // ==================== CROSS-VALIDATION MODE ====================
         function loadDatasetCV() {
             const fileInput = document.getElementById('csvFilCV');
             const file = fileInput.files[0];
@@ -767,7 +789,6 @@
             try {
                 const targetColIndex = parseInt(document.getElementById('cvTargetColumn').value);
                 const k = parseInt(document.getElementById('cvKFolds').value);
-                const maxDepth = parseInt(document.getElementById('cvMaxDepth').value);
 
                 if (isNaN(targetColIndex)) {
                     throw new Error('Please select a target column');
@@ -781,7 +802,7 @@
 
                 setTimeout(() => {
                     try {
-                        const results = crossValidate(globalCVData, targetColIndex, k, maxDepth);
+                        const results = crossValidate(globalCVData, targetColIndex, k);
                         displayCVResults(results);
                         loading.style.display = 'none';
                         successMsg.textContent = '✅ Cross-validation completed successfully!';
@@ -799,4 +820,476 @@
             }
         }
 
-        function crossVali
+        function crossValidate(data, targetColIndex, k) {
+            const shuffled = [...data].sort(() => Math.random() - 0.5);
+            
+            const folds = [];
+            const foldSize = Math.floor(shuffled.length / k);
+            
+            for (let i = 0; i < k; i++) {
+                const start = i * foldSize;
+                const end = i === k - 1 ? shuffled.length : (i + 1) * foldSize;
+                folds.push(shuffled.slice(start, end));
+            }
+
+            const foldResults = [];
+            let totalRMSE = 0;
+
+            for (let i = 0; i < k; i++) {
+                const testFold = folds[i];
+                const trainFold = folds.slice(0, i).concat(folds.slice(i + 1)).flat();
+
+                const trainX = trainFold.map(row => 
+                    row.filter((_, idx) => idx !== targetColIndex)
+                );
+                const trainY = trainFold.map(row => row[targetColIndex]);
+
+                const testX = testFold.map(row => 
+                    row.filter((_, idx) => idx !== targetColIndex)
+                );
+                const testY = testFold.map(row => row[targetColIndex]);
+
+                const model = trainXGBoostModel(trainX, trainY);
+                const predictions = testX.map(x => predictXGBoost(model, x));
+                
+                const rmse = calculateRMSE(testY, predictions);
+
+                foldResults.push({
+                    fold: i + 1,
+                    rmse: rmse,
+                    testSize: testFold.length
+                });
+
+                totalRMSE += rmse;
+            }
+
+            const meanRMSE = totalRMSE / k;
+
+            return {
+                meanRMSE: meanRMSE,
+                foldResults: foldResults,
+                k: k,
+                targetColumn: globalCVHeaders[targetColIndex]
+            };
+        }
+
+        function displayCVResults(results) {
+            globalCVResults = results;
+
+            document.getElementById('cvMeanRMSE').textContent = results.meanRMSE.toFixed(4);
+
+            let foldHtml = '';
+            results.foldResults.forEach(fold => {
+                foldHtml += `
+                    <div class="fold-result">
+                        <div class="fold-result-info">
+                            <div class="fold-result-label">Fold ${fold.fold}</div>
+                            <div class="fold-result-value">RMSE: ${fold.rmse.toFixed(4)}</div>
+                            <div class="fold-result-label" style="margin-top: 5px;">Test Size: ${fold.testSize}</div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('cvFoldResults').innerHTML = foldHtml;
+            document.getElementById('cvResultsSection').classList.remove('hidden');
+            document.getElementById('cvResultsSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function downloadCVResults() {
+            if (!globalCVResults) return;
+
+            const csv = `XGBoost Cross-Validation Results
+Target Column,${globalCVResults.targetColumn}
+Number of Folds,${globalCVResults.k}
+Mean RMSE,${globalCVResults.meanRMSE.toFixed(4)}
+
+Fold-by-Fold RMSE
+Fold,Test Size,RMSE
+${globalCVResults.foldResults.map(f => `${f.fold},${f.testSize},${f.rmse.toFixed(4)}`).join('\n')}`;
+
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv));
+            element.setAttribute('download', 'xgboost_cv_results.csv');
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        // ==================== PREDICTION MODE ====================
+        function loadTrainingData() {
+            const fileInput = document.getElementById('csvFileTrain');
+            const file = fileInput.files[0];
+            const errorMsg = document.getElementById('errorMessage');
+            const successMsg = document.getElementById('successMessage');
+
+            errorMsg.style.display = 'none';
+            successMsg.style.display = 'none';
+
+            if (!file) {
+                errorMsg.textContent = '❌ Please select a training CSV file';
+                errorMsg.style.display = 'block';
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const csv = e.target.result;
+                    const lines = csv.trim().split('\n');
+                    
+                    if (lines.length < 2) {
+                        throw new Error('CSV file must have at least header and one data row');
+                    }
+
+                    globalTrainHeaders = lines[0].split(',').map(h => h.trim());
+                    
+                    globalTrainData = [];
+                    for (let i = 1; i < lines.length; i++) {
+                        if (lines[i].trim() === '') continue;
+                        
+                        const values = lines[i].split(',').map(v => {
+                            const num = parseFloat(v.trim());
+                            return isNaN(num) ? v.trim() : num;
+                        });
+                        
+                        if (values.length === globalTrainHeaders.length) {
+                            globalTrainData.push(values);
+                        }
+                    }
+
+                    if (globalTrainData.length === 0) {
+                        throw new Error('No valid data rows found');
+                    }
+
+                    displayPredTrainPreview();
+                    populatePredTargetColumn();
+                    
+                    document.getElementById('predTrainPreviewSection').classList.remove('hidden');
+                    document.getElementById('predTestUploadSection').classList.remove('hidden');
+
+                    successMsg.textContent = `✅ Training data loaded! Rows: ${globalTrainData.length}, Columns: ${globalTrainHeaders.length}`;
+                    successMsg.style.display = 'block';
+
+                } catch (error) {
+                    errorMsg.textContent = '❌ Error: ' + error.message;
+                    errorMsg.style.display = 'block';
+                }
+            };
+
+            reader.readAsText(file);
+        }
+
+        function displayPredTrainPreview() {
+            const previewDiv = document.getElementById('predTrainDataPreview');
+            const dataInfo = document.getElementById('predTrainDataInfo');
+            
+            dataInfo.textContent = `Showing first 5 of ${globalTrainData.length} rows`;
+
+            let html = '<table><thead><tr>';
+            globalTrainHeaders.forEach(header => {
+                html += `<th>${header}</th>`;
+            });
+            html += '</tr></thead><tbody>';
+
+            for (let i = 0; i < Math.min(5, globalTrainData.length); i++) {
+                html += '<tr>';
+                globalTrainData[i].forEach(value => {
+                    html += `<td>${typeof value === 'number' ? value.toFixed(2) : value}</td>`;
+                });
+                html += '</tr>';
+            }
+
+            html += '</tbody></table>';
+            previewDiv.innerHTML = html;
+        }
+
+        function populatePredTargetColumn() {
+            const targetSelect = document.getElementById('predTargetColumn');
+            targetSelect.innerHTML = '<option value="">-- Choose Target Column --</option>';
+            globalTrainHeaders.forEach((header, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.textContent = header;
+                targetSelect.appendChild(option);
+            });
+        }
+
+        function loadTestData() {
+            const fileInput = document.getElementById('csvFileTest');
+            const file = fileInput.files[0];
+            const errorMsg = document.getElementById('errorMessage');
+            const successMsg = document.getElementById('successMessage');
+
+            errorMsg.style.display = 'none';
+            successMsg.style.display = 'none';
+
+            if (!file) {
+                errorMsg.textContent = '❌ Please select a test CSV file';
+                errorMsg.style.display = 'block';
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const csv = e.target.result;
+                    const lines = csv.trim().split('\n');
+                    
+                    if (lines.length < 1) {
+                        throw new Error('CSV file must have at least a header');
+                    }
+
+                    globalTestHeaders = lines[0].split(',').map(h => h.trim());
+                    
+                    if (globalTestHeaders.length !== globalTrainHeaders.length) {
+                        throw new Error('Test data must have the same number of columns as training data');
+                    }
+
+                    globalTestData = [];
+                    for (let i = 1; i < lines.length; i++) {
+                        if (lines[i].trim() === '') continue;
+                        
+                        const values = lines[i].split(',').map(v => {
+                            const num = parseFloat(v.trim());
+                            return isNaN(num) ? v.trim() : num;
+                        });
+                        
+                        if (values.length === globalTestHeaders.length) {
+                            globalTestData.push(values);
+                        }
+                    }
+
+                    if (globalTestData.length === 0) {
+                        throw new Error('No valid data rows found in test data');
+                    }
+
+                    displayPredTestPreview();
+                    
+                    document.getElementById('predTestPreviewSection').classList.remove('hidden');
+                    document.getElementById('predConfigSection').classList.remove('hidden');
+
+                    successMsg.textContent = `✅ Test data loaded! Rows: ${globalTestData.length}`;
+                    successMsg.style.display = 'block';
+
+                } catch (error) {
+                    errorMsg.textContent = '❌ Error: ' + error.message;
+                    errorMsg.style.display = 'block';
+                }
+            };
+
+            reader.readAsText(file);
+        }
+
+        function displayPredTestPreview() {
+            const previewDiv = document.getElementById('predTestDataPreview');
+            const dataInfo = document.getElementById('predTestDataInfo');
+            
+            dataInfo.textContent = `Showing first 5 of ${globalTestData.length} rows`;
+
+            let html = '<table><thead><tr>';
+            globalTestHeaders.forEach(header => {
+                html += `<th>${header}</th>`;
+            });
+            html += '</tr></thead><tbody>';
+
+            for (let i = 0; i < Math.min(5, globalTestData.length); i++) {
+                html += '<tr>';
+                globalTestData[i].forEach(value => {
+                    html += `<td>${typeof value === 'number' ? value.toFixed(2) : value}</td>`;
+                });
+                html += '</tr>';
+            }
+
+            html += '</tbody></table>';
+            previewDiv.innerHTML = html;
+        }
+
+        function performPrediction() {
+            const errorMsg = document.getElementById('errorMessage');
+            const successMsg = document.getElementById('successMessage');
+            const loading = document.getElementById('predLoading');
+
+            errorMsg.style.display = 'none';
+            successMsg.style.display = 'none';
+
+            try {
+                const targetColIndex = parseInt(document.getElementById('predTargetColumn').value);
+
+                if (isNaN(targetColIndex)) {
+                    throw new Error('Please select a target column');
+                }
+
+                if (!globalTrainData || !globalTestData) {
+                    throw new Error('Both training and test data must be loaded');
+                }
+
+                loading.style.display = 'block';
+
+                setTimeout(() => {
+                    try {
+                        const results = makePredictions(globalTrainData, globalTestData, targetColIndex);
+                        displayPredResults(results);
+                        loading.style.display = 'none';
+                        successMsg.textContent = '✅ Predictions completed successfully!';
+                        successMsg.style.display = 'block';
+                    } catch (error) {
+                        loading.style.display = 'none';
+                        errorMsg.textContent = '❌ Error: ' + error.message;
+                        errorMsg.style.display = 'block';
+                    }
+                }, 800);
+
+            } catch (error) {
+                errorMsg.textContent = '❌ Error: ' + error.message;
+                errorMsg.style.display = 'block';
+            }
+        }
+
+        function makePredictions(trainData, testData, targetColIndex) {
+            const trainX = trainData.map(row => 
+                row.filter((_, idx) => idx !== targetColIndex)
+            );
+            const trainY = trainData.map(row => row[targetColIndex]);
+
+            const testX = testData.map(row => 
+                row.filter((_, idx) => idx !== targetColIndex)
+            );
+
+            const model = trainXGBoostModel(trainX, trainY);
+
+            const predictions = testX.map(x => predictXGBoost(model, x));
+
+            const trainPredictions = trainX.map(x => predictXGBoost(model, x));
+            const trainRMSE = calculateRMSE(trainY, trainPredictions);
+
+            return {
+                predictions: predictions,
+                trainRMSE: trainRMSE,
+                trainY: trainY,
+                testData: testData,
+                targetColIndex: targetColIndex
+            };
+        }
+
+        function displayPredResults(results) {
+            globalPredResults = results;
+
+            document.getElementById('predTrainRMSE').textContent = results.trainRMSE.toFixed(4);
+            document.getElementById('predTestCount').textContent = results.predictions.length;
+
+            let predHtml = '';
+            results.predictions.forEach((pred, idx) => {
+                predHtml += `
+                    <div class="prediction-item">
+                        <div class="prediction-item-row">
+                            <div style="flex: 1;">
+                                <div style="font-weight: 600; color: #667eea;">Sample ${idx + 1}</div>
+                                <div style="color: #666; font-size: 0.9em; margin-top: 5px;">
+                                    Predicted Value: <strong>${pred.toFixed(4)}</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('predictionResults').innerHTML = predHtml;
+            document.getElementById('predResultsSection').classList.remove('hidden');
+            document.getElementById('predResultsSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function downloadPredResults() {
+            if (!globalPredResults) return;
+
+            let csv = 'XGBoost Prediction Results\n';
+            csv += `Training RMSE,${globalPredResults.trainRMSE.toFixed(4)}\n`;
+            csv += `Number of Predictions,${globalPredResults.predictions.length}\n\n`;
+            csv += 'Predictions\n';
+            csv += 'Sample,Predicted Value\n';
+            globalPredResults.predictions.forEach((pred, idx) => {
+                csv += `${idx + 1},${pred.toFixed(4)}\n`;
+            });
+
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv));
+            element.setAttribute('download', 'xgboost_predictions.csv');
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        // ==================== COMMON FUNCTIONS ====================
+        function trainXGBoostModel(X, Y) {
+            const n = X.length;
+            
+            let predictions = new Array(n).fill(0);
+            const trees = [];
+            const learningRate = 0.1;
+            const numRounds = 10;
+
+            for (let round = 0; round < numRounds; round++) {
+                const residuals = Y.map((y, i) => y - predictions[i]);
+                const treeCoeff = residuals.reduce((a, b) => a + b, 0) / residuals.length;
+                trees.push(treeCoeff);
+
+                predictions = predictions.map((p, i) => p + learningRate * treeCoeff);
+            }
+
+            return {
+                trees: trees,
+                learningRate: learningRate,
+                initialPrediction: Y.reduce((a, b) => a + b, 0) / Y.length
+            };
+        }
+
+        function predictXGBoost(model, x) {
+            let prediction = model.initialPrediction;
+            for (let i = 0; i < model.trees.length; i++) {
+                prediction += model.learningRate * model.trees[i];
+            }
+            return prediction;
+        }
+
+        function calculateRMSE(actual, predicted) {
+            const mse = actual.reduce((sum, val, i) => 
+                sum + Math.pow(val - predicted[i], 2), 0
+            ) / actual.length;
+            return Math.sqrt(mse);
+        }
+
+        function resetAll() {
+            globalCVData = null;
+            globalCVHeaders = null;
+            globalCVResults = null;
+            globalTrainData = null;
+            globalTrainHeaders = null;
+            globalTestData = null;
+            globalTestHeaders = null;
+            globalPredResults = null;
+
+            document.getElementById('csvFilCV').value = '';
+            document.getElementById('fileNameCV').textContent = 'No file selected';
+            document.getElementById('csvFileTrain').value = '';
+            document.getElementById('fileNameTrain').textContent = 'No file selected';
+            document.getElementById('csvFileTest').value = '';
+            document.getElementById('fileNameTest').textContent = 'No file selected';
+
+            document.getElementById('cvTargetColumn').innerHTML = '<option value="">-- Choose Target Column --</option>';
+            document.getElementById('predTargetColumn').innerHTML = '<option value="">-- Choose Target Column --</option>';
+            document.getElementById('cvKFolds').value = '5';
+
+            document.querySelectorAll('.hidden').forEach(el => {
+                if (el.id !== 'modeSelector') {
+                    el.classList.add('hidden');
+                }
+            });
+
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
