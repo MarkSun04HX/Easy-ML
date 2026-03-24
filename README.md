@@ -3,6 +3,8 @@
 ## Overview
 Easy-ML is a user-friendly machine learning library that provides easy-to-use implementations of popular algorithms. This documentation covers setup, file structure, CSV format requirements, per-model feature requirements, and evaluation metrics.
 
+Use `index.html` as the main entry page to access all available model tools from one place.
+
 ## Supported Models
 1. **XGBoost**  
    XGBoost is an optimized gradient boosting approach designed for high performance on tabular data.
@@ -31,6 +33,15 @@ Easy-ML is a user-friendly machine learning library that provides easy-to-use im
 9. **KNNs**  
    K-Nearest Neighbors predicts from the local neighborhood of similar samples.
 
+10. **LightGBM**  
+   LightGBM is a gradient boosting framework focused on high efficiency and strong performance for tabular data.
+
+11. **Logistic Regression**  
+   A linear probabilistic model commonly used for binary and multiclass classification.
+
+12. **Naive Bayes**  
+   A probabilistic classifier that is especially effective for high-dimensional, sparse-feature tasks.
+
 ## Setup Instructions
 1. Clone the repository:
    ```
@@ -47,6 +58,7 @@ Easy-ML is a user-friendly machine learning library that provides easy-to-use im
 
 ## File Structure
 - `models/` - HTML tools for each model.
+- `source_code/` - Optional folder for Python/model source implementations and shared utilities.
 - `data/` - Input CSV files.
 - `requirements.txt` - Python dependencies.
 - `example.py` - Example usage script.

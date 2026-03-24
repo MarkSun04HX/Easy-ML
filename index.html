@@ -45,9 +45,10 @@
 
         .models-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 30px;
             margin-bottom: 40px;
+            align-items: stretch;
         }
 
         .model-card {
@@ -58,6 +59,7 @@
             transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
+            height: 100%;
         }
 
         .model-card:hover {
@@ -121,11 +123,24 @@
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
+            width: 100%;
+            min-height: 52px;
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .model-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .model-btn.disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
         }
 
         .footer {
@@ -187,7 +202,7 @@
                         <span class="detail-value">Small to Large</span>
                     </div>
                 </div>
-                <button class="model-btn" onclick="window.location.href='XGBoost.html'">
+                <button class="model-btn" onclick="window.location.href='models/XGBoost.html'">
                     Try XGBoost →
                 </button>
             </div>
@@ -221,7 +236,7 @@
                         <span class="detail-value">Small to Medium</span>
                     </div>
                 </div>
-                <button class="model-btn" onclick="window.location.href='RandomForest.html'">
+                <button class="model-btn" onclick="window.location.href='models/RandomForest.html'">
                     Try Random Forest →
                 </button>
             </div>
@@ -255,13 +270,9 @@
                         <span class="detail-value">Any Size</span>
                     </div>
                 </div>
-                <button class="model-btn" onclick="window.location.href='LinearRegression.html'">
+                <button class="model-btn" onclick="window.location.href='models/LinearRegression.html'">
                     Try Linear Regression →
                 </button>
-            </div>
-        </div>
-
-
             <!-- Elastic Net Card -->
             <div class="model-card">
                 <div class="model-icon">🔗</div>
@@ -276,7 +287,7 @@
                     <div class="detail-item"><span class="detail-label">🎯 Interpretability:</span><span class="detail-value">High</span></div>
                     <div class="detail-item"><span class="detail-label">💾 Data Size:</span><span class="detail-value">Small to Medium</span></div>
                 </div>
-                <button class="model-btn" onclick="window.location.href='ElasticNet.html'">Try Elastic Net →</button>
+                <button class="model-btn" onclick="window.location.href='models/ElasticNet.html'">Try Elastic Net →</button>
             </div>
 
             <!-- Decision Tree Card -->
@@ -293,7 +304,7 @@
                     <div class="detail-item"><span class="detail-label">🎯 Interpretability:</span><span class="detail-value">Excellent</span></div>
                     <div class="detail-item"><span class="detail-label">💾 Data Size:</span><span class="detail-value">Small to Medium</span></div>
                 </div>
-                <button class="model-btn" onclick="window.location.href='DecisionTree.html'">Try Decision Tree →</button>
+                <button class="model-btn" onclick="window.location.href='models/DecisionTree.html'">Try Decision Tree →</button>
             </div>
 
             <!-- Neural Networks Card -->
@@ -310,7 +321,7 @@
                     <div class="detail-item"><span class="detail-label">🎯 Interpretability:</span><span class="detail-value">Lower</span></div>
                     <div class="detail-item"><span class="detail-label">💾 Data Size:</span><span class="detail-value">Medium to Large</span></div>
                 </div>
-                <button class="model-btn" onclick="window.location.href='NeuralNetworks.html'">Try Neural Networks →</button>
+                <button class="model-btn" onclick="window.location.href='models/NeuralNetworks.html'">Try Neural Networks →</button>
             </div>
 
             <!-- CatBoost Card -->
@@ -327,7 +338,7 @@
                     <div class="detail-item"><span class="detail-label">🎯 Interpretability:</span><span class="detail-value">Moderate</span></div>
                     <div class="detail-item"><span class="detail-label">💾 Data Size:</span><span class="detail-value">Small to Large</span></div>
                 </div>
-                <button class="model-btn" onclick="window.location.href='CatBoost.html'">Try CatBoost →</button>
+                <button class="model-btn" onclick="window.location.href='models/CatBoost.html'">Try CatBoost →</button>
             </div>
 
             <!-- SVMs Card -->
@@ -344,7 +355,7 @@
                     <div class="detail-item"><span class="detail-label">🎯 Interpretability:</span><span class="detail-value">Moderate</span></div>
                     <div class="detail-item"><span class="detail-label">💾 Data Size:</span><span class="detail-value">Small to Medium</span></div>
                 </div>
-                <button class="model-btn" onclick="window.location.href='SVMs.html'">Try SVMs →</button>
+                <button class="model-btn" onclick="window.location.href='models/SVMs.html'">Try SVMs →</button>
             </div>
 
             <!-- KNNs Card -->
@@ -361,8 +372,60 @@
                     <div class="detail-item"><span class="detail-label">🎯 Interpretability:</span><span class="detail-value">High</span></div>
                     <div class="detail-item"><span class="detail-label">💾 Data Size:</span><span class="detail-value">Small to Medium</span></div>
                 </div>
-                <button class="model-btn" onclick="window.location.href='KNNs.html'">Try KNNs →</button>
+                <button class="model-btn" onclick="window.location.href='models/KNNs.html'">Try KNNs →</button>
             </div>
+
+            <!-- LightGBM Card -->
+            <div class="model-card">
+                <div class="model-icon">💡</div>
+                <h2>LightGBM</h2>
+                <p class="model-description">
+                    Histogram-based gradient boosting optimized for speed and performance on large tabular datasets.
+                </p>
+                <div class="model-details">
+                    <div class="detail-item"><span class="detail-label">📊 Best For:</span><span class="detail-value">Fast boosting on medium to large tabular data</span></div>
+                    <div class="detail-item"><span class="detail-label">⚡ Speed:</span><span class="detail-value">Very Fast</span></div>
+                    <div class="detail-item"><span class="detail-label">📈 Accuracy:</span><span class="detail-value">Excellent</span></div>
+                    <div class="detail-item"><span class="detail-label">🎯 Interpretability:</span><span class="detail-value">Moderate</span></div>
+                    <div class="detail-item"><span class="detail-label">💾 Data Size:</span><span class="detail-value">Medium to Large</span></div>
+                </div>
+                <button class="model-btn" onclick="window.location.href='models/LightGBM.html'">Try LightGBM →</button>
+            </div>
+
+            <!-- Logistic Regression Card -->
+            <div class="model-card">
+                <div class="model-icon">📐</div>
+                <h2>Logistic Regression</h2>
+                <p class="model-description">
+                    A linear probabilistic classifier that is fast, interpretable, and effective for baseline classification.
+                </p>
+                <div class="model-details">
+                    <div class="detail-item"><span class="detail-label">📊 Best For:</span><span class="detail-value">Binary or multiclass classification baselines</span></div>
+                    <div class="detail-item"><span class="detail-label">⚡ Speed:</span><span class="detail-value">Very Fast</span></div>
+                    <div class="detail-item"><span class="detail-label">📈 Accuracy:</span><span class="detail-value">Good</span></div>
+                    <div class="detail-item"><span class="detail-label">🎯 Interpretability:</span><span class="detail-value">High</span></div>
+                    <div class="detail-item"><span class="detail-label">💾 Data Size:</span><span class="detail-value">Small to Medium</span></div>
+                </div>
+                <button class="model-btn" onclick="window.location.href='models/LogisticRegression.html'">Try Logistic Regression →</button>
+            </div>
+
+            <!-- Naive Bayes Card -->
+            <div class="model-card">
+                <div class="model-icon">🧪</div>
+                <h2>Naive Bayes</h2>
+                <p class="model-description">
+                    A lightweight probabilistic classifier that works well on high-dimensional sparse features.
+                </p>
+                <div class="model-details">
+                    <div class="detail-item"><span class="detail-label">📊 Best For:</span><span class="detail-value">Text or sparse-feature classification tasks</span></div>
+                    <div class="detail-item"><span class="detail-label">⚡ Speed:</span><span class="detail-value">Instant</span></div>
+                    <div class="detail-item"><span class="detail-label">📈 Accuracy:</span><span class="detail-value">Good</span></div>
+                    <div class="detail-item"><span class="detail-label">🎯 Interpretability:</span><span class="detail-value">High</span></div>
+                    <div class="detail-item"><span class="detail-label">💾 Data Size:</span><span class="detail-value">Any Size</span></div>
+                </div>
+                <button class="model-btn" onclick="window.location.href='models/NaiveBayes.html'">Try Naive Bayes →</button>
+            </div>
+        </div>
 
         <div class="footer">
             <p>🎓 Easy-ML | Making Machine Learning Accessible to Everyone</p>
