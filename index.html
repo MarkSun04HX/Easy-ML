@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ML Cross-Validation Tool</title>
-    <script src="https://cdn.jsdelivr.net/npm/ml-regression@3/dist/ml-regression.min.js"></script>
+    <title>Easy-ML - Machine Learning Model Selection</title>
     <style>
         * {
             margin: 0;
@@ -23,81 +22,100 @@
         }
 
         .container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-width: 1000px;
+            max-width: 1200px;
             width: 100%;
-            padding: 40px;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 60px;
+            color: white;
         }
 
         .header h1 {
-            color: #667eea;
-            font-size: 2.5em;
+            font-size: 3.5em;
             margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
 
         .header p {
-            color: #666;
-            font-size: 1.1em;
-        }
-
-        .section {
-            margin-bottom: 30px;
-            padding: 20px;
-            background: #f9f9f9;
-            border-radius: 10px;
-            border-left: 4px solid #667eea;
-        }
-
-        .section h2 {
-            color: #333;
-            margin-bottom: 15px;
             font-size: 1.3em;
+            opacity: 0.95;
         }
 
-        .form-group {
+        .models-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .model-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .model-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .model-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .model-card h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        .model-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 0.95em;
+            flex-grow: 1;
+        }
+
+        .model-details {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 10px;
             margin-bottom: 20px;
         }
 
-        label {
-            display: block;
-            margin-bottom: 8px;
+        .detail-item {
+            margin-bottom: 12px;
+            font-size: 0.9em;
+        }
+
+        .detail-label {
             font-weight: 600;
             color: #333;
+            display: block;
+            margin-bottom: 4px;
         }
 
-        input[type="file"],
-        select,
-        input[type="number"] {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 1em;
-            transition: all 0.3s ease;
+        .detail-value {
+            color: #666;
+            padding-left: 10px;
+            border-left: 3px solid #667eea;
         }
 
-        input[type="file"]:focus,
-        select:focus,
-        input[type="number"]:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        button {
+        .model-btn {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 12px 30px;
+            padding: 14px 30px;
             border: none;
             border-radius: 8px;
-            font-size: 1em;
+            font-size: 1.05em;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -105,246 +123,147 @@
             letter-spacing: 1px;
         }
 
-        button:hover {
+        .model-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
         }
 
-        button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .button-container {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .error-message {
-            background-color: #fee;
-            color: #c33;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            display: none;
-            border-left: 4px solid #c33;
-        }
-
-        .success-message {
-            background-color: #efe;
-            color: #3c3;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            display: none;
-            border-left: 4px solid #3c3;
-        }
-
-        .info-message {
-            background-color: #eef;
-            color: #33c;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            display: none;
-            border-left: 4px solid #33c;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            max-height: 300px;
-            overflow-y: auto;
-            display: block;
-        }
-
-        table thead {
-            background: #667eea;
+        .footer {
+            text-align: center;
             color: white;
-            position: sticky;
-            top: 0;
+            margin-top: 40px;
+            opacity: 0.8;
         }
 
-        table th,
-        table td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #e0e0e0;
-        }
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5em;
+            }
 
-        table tr:hover {
-            background: #f5f5f5;
-        }
-
-        .results-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        @media (max-width: 600px) {
-            .results-grid {
+            .models-grid {
                 grid-template-columns: 1fr;
             }
-        }
 
-        .result-card {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            border: 2px solid #667eea;
-            text-align: center;
-        }
-
-        .result-card h3 {
-            color: #667eea;
-            margin-bottom: 10px;
-            font-size: 0.9em;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .result-value {
-            font-size: 2em;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 5px;
-        }
-
-        .result-label {
-            color: #999;
-            font-size: 0.9em;
-        }
-
-        .fold-results {
-            margin-top: 20px;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
-        .fold-result {
-            background: white;
-            padding: 12px;
-            border-radius: 6px;
-            margin-bottom: 10px;
-            border-left: 3px solid #667eea;
-        }
-
-        .fold-result-row {
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
-        }
-
-        .fold-result-item {
-            flex: 1;
-        }
-
-        .fold-result-label {
-            font-weight: 600;
-            color: #666;
-            font-size: 0.9em;
-        }
-
-        .fold-result-value {
-            color: #333;
-            font-weight: 700;
-        }
-
-        .loading {
-            display: none;
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .hidden {
-            display: none;
+            .model-card {
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>🤖 ML Cross-Validation Tool</h1>
-            <p>Upload your dataset and perform k-fold cross-validation</p>
+            <h1>🤖 Easy-ML</h1>
+            <p>Select Your Machine Learning Model</p>
         </div>
 
-        <div class="error-message" id="errorMessage"></div>
-        <div class="success-message" id="successMessage"></div>
-        <div class="info-message" id="infoMessage"></div>
-
-        <!-- Data Upload Section -->
-        <div class="section">
-            <h2>📊 Step 1: Upload Dataset</h2>
-            <div class="form-group">
-                <label for="csvFile">Select CSV File:</label>
-                <input type="file" id="csvFile" accept=".csv" required>
-            </div>
-            <button onclick="loadDataset()">📁 Load Dataset</button>
-        </div>
-
-        <!-- Data Preview Section -->
-        <div class="section hidden" id="previewSection">
-            <h2>👀 Dataset Preview</h2>
-            <div id="dataPreview"></div>
-        </div>
-
-        <!-- Column Selection Section -->
-        <div class="section hidden" id="configSection">
-            <h2>⚙️ Step 2: Configuration</h2>
-            
-            <div class="form-group">
-                <label for="targetColumn">Select Target Column (Y):</label>
-                <select id="targetColumn" required>
-                    <option value="">-- Choose Target Column --</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="kFolds">Number of Folds (k):</label>
-                <input type="number" id="kFolds" value="5" min="2" max="10" required>
-            </div>
-
-            <div class="form-group">
-                <label for="modelType">Select Model Type:</label>
-                <select id="modelType" required>
-                    <option value="linear">Linear Regression</option>
-                    <option value="polynomial">Polynomial Regression (degree 2)</option>
-                </select>
+        <div class="models-grid">
+            <!-- XGBoost Card -->
+            <div class="model-card">
+                <div class="model-icon">🚀</div>
+                <h2>XGBoost</h2>
+                <p class="model-description">
+                    eXtreme Gradient Boosting is a powerful ensemble learning method that combines multiple decision trees sequentially, with each tree correcting errors from previous ones.
+                </p>
+                <div class="model-details">
+                    <div class="detail-item">
+                        <span class="detail-label">📊 Best For:</span>
+                        <span class="detail-value">Tabular data, classification & regression, competitions</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">⚡ Speed:</span>
+                        <span class="detail-value">Very Fast</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">📈 Accuracy:</span>
+                        <span class="detail-value">Excellent</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">🎯 Interpretability:</span>
+                        <span class="detail-value">Moderate</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">💾 Data Size:</span>
+                        <span class="detail-value">Small to Large</span>
+                    </div>
+                </div>
+                <button class="model-btn" onclick="window.location.href='pages/xgboost.html'">
+                    Try XGBoost →
+                </button>
             </div>
 
-            <button onclick="performCrossValidation()">🔮 Run Cross-Validation</button>
+            <!-- Random Forest Card -->
+            <div class="model-card">
+                <div class="model-icon">🌲</div>
+                <h2>Random Forest</h2>
+                <p class="model-description">
+                    An ensemble method that builds multiple decision trees in parallel using random subsets of data and features, then averages their predictions for robust results.
+                </p>
+                <div class="model-details">
+                    <div class="detail-item">
+                        <span class="detail-label">📊 Best For:</span>
+                        <span class="detail-value">Tabular data, mixed feature types, balanced datasets</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">⚡ Speed:</span>
+                        <span class="detail-value">Fast</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">📈 Accuracy:</span>
+                        <span class="detail-value">Very Good</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">🎯 Interpretability:</span>
+                        <span class="detail-value">Good</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">💾 Data Size:</span>
+                        <span class="detail-value">Small to Medium</span>
+                    </div>
+                </div>
+                <button class="model-btn" onclick="window.location.href='pages/random-forest.html'">
+                    Try Random Forest →
+                </button>
+            </div>
+
+            <!-- Linear Regression Card -->
+            <div class="model-card">
+                <div class="model-icon">📉</div>
+                <h2>Linear Regression</h2>
+                <p class="model-description">
+                    A foundational regression model that finds the best-fit line through your data, ideal for understanding linear relationships and quick baseline models.
+                </p>
+                <div class="model-details">
+                    <div class="detail-item">
+                        <span class="detail-label">📊 Best For:</span>
+                        <span class="detail-value">Simple relationships, interpretability, baseline comparison</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">⚡ Speed:</span>
+                        <span class="detail-value">Instant</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">📈 Accuracy:</span>
+                        <span class="detail-value">Variable (depends on data)</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">🎯 Interpretability:</span>
+                        <span class="detail-value">Excellent</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">💾 Data Size:</span>
+                        <span class="detail-value">Any Size</span>
+                    </div>
+                </div>
+                <button class="model-btn" onclick="window.location.href='index.html'">
+                    Try Linear Regression →
+                </button>
+            </div>
         </div>
 
-        <!-- Loading Section -->
-        <div class="loading" id="loading">
-            <div class="spinner"></div>
-            <p>Running cross-validation...</p>
+        <div class="footer">
+            <p>🎓 Easy-ML | Making Machine Learning Accessible to Everyone</p>
         </div>
-
-        <!-- Results Section -->
-        <div class="section hidden" id="resultsSection">
-            <h2>📈 Cross-Validation Results</h2>
-            
-            <div class="results-grid">
-                <div*
-
+    </div>
+</body>
+</html>
